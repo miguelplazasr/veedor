@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: miguelplazas
- * Date: 7/03/16
- * Time: 21:14
+ * Date: 12/03/16
+ * Time: 17:32
  */
 
 namespace AppBundle\Document;
@@ -11,24 +11,33 @@ namespace AppBundle\Document;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 /**
- * @MongoDB\Document
+ * Class Category
+ * @package AppBundle\Document
+ *
+ * @MongoDB\Document()
  */
-class Product
+class Category
 {
     /**
-     * @MongoDB\Id
+     * @var
+     * @MongoDB\Id()
      */
     protected $id;
 
     /**
-     * @MongoDB\String
+     * @var
+     * @MongoDB\String()
      */
     protected $name;
 
     /**
-     * @MongoDB\Float
+     * @var
+     * @MongoDB\String()
      */
-    protected $price;
+    protected $description;
+
+
+
 
     /**
      * Get id
@@ -63,24 +72,24 @@ class Product
     }
 
     /**
-     * Set price
+     * Set description
      *
-     * @param float $price
+     * @param string $description
      * @return self
      */
-    public function setPrice($price)
+    public function setDescription($description)
     {
-        $this->price = $price;
+        $this->description = $description;
         return $this;
     }
 
     /**
-     * Get price
+     * Get description
      *
-     * @return float $price
+     * @return string $description
      */
-    public function getPrice()
+    public function getDescription()
     {
-        return $this->price;
+        return $this->description;
     }
 }
