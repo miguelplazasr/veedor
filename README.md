@@ -8,6 +8,8 @@ A Symfony project created on March 7, 2016, 8:38 pm.
 
 ##V.0.1.0##
 
-* Implement [git flow](http://nvie.com/posts/a-successful-git-branching-model/)
-* 
+**Bundles**
+* [git flow](http://nvie.com/posts/a-successful-git-branching-model/)
+* [FOSRestBundle](http://symfony.com/doc/master/bundles/FOSRestBundle/index.html)
+
 

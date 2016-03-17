@@ -1,9 +1,15 @@
-# Learn more about services, parameters and containers at
-# http://symfony.com/doc/current/book/service_container.html
 parameters:
-#    parameter_name: value
+    app.document.category: AppBundle\Document\Category
+    app.document.handler: AppBundle\Handler\CategoryHandler
+
 
 services:
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+
+
+    # Entrance Handler
+    app.handler.category:
+        class: %app.document.handler%
+        arguments: ["@doctrine.odm.mongodb.document_manager", "%app.document.category%", "@form.factory" ]
