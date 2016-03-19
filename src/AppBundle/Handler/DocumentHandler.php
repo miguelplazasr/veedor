@@ -16,21 +16,29 @@ abstract class DocumentHandler implements HandlerInterface
 {
 
     protected $dm;
-    private $documentClass;
-    private $repository;
+    protected $documentClass;
+    protected $repository;
     protected $formFactory;
     protected $formType;
 
-    function __construct(DocumentManager $dm, $documentClass, FormFactoryInterface $formFactory, $formType)
+    function __construct($documentClass, $formType)
     {
-        $this->dm = $dm;
         $this->documentClass = $documentClass;
-        $this->repository = $this->dm->getRepository($this->documentClass);
-        $this->formFactory = $formFactory;
         $this->formType = $formType;
     }
 
-    protected function all()
+    public function setDocumentManager(DocumentManager $dm)
+    {
+        $this->dm = $dm;
+        $this->repository = $this->dm->getRepository($this->documentClass);
+    }
+
+    public function setFormFactory(FormFactoryInterface $formFactory)
+    {
+        $this->formFactory = $formFactory;
+    }
+
+    public function all()
     {
         return $this->repository->findAll();
     }

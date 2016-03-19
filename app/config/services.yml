@@ -13,8 +13,13 @@ services:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
 
+    app.document_manager:
+        abstract: true
+        calls:
+            - [ setDocumentManager, [ "@doctrine.odm.mongodb.document_manager" ] ]
+            - [ setFormFactory, [ "@form.factory" ] ]
 
-    # Entrance Handler
     app.handler.category:
-        class: %app.document.handler%
-        arguments: ["@doctrine.odm.mongodb.document_manager", "%app.document.category%", "@form.factory" ]
+        class: "%app.document.handler%"
+        parent: app.document_manager
+        arguments: [ "%app.document.category%", "%app.form.type.category%" ]
