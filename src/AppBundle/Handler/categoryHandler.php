@@ -17,26 +17,7 @@ class CategoryHandler extends DocumentHandler
 {
 
 
-    public function process( $document, array $parameters, $method = "PUT")
-    {
-        $form = $this->formFactory->create(new CategoryType(), $document, array('method' => $method));
 
-        $form->submit($parameters, "PATCH" !== $method);
-
-        if ($form->isValid()) {
-
-            $document = $form->getData();
-
-            $this->dm->persist($document);
-            $this->dm->flush($document);
-
-            return $document;
-
-        }
-
-        throw new InvalidFormException('Invalid submitted data', $form);
-
-    }
 
 
 }

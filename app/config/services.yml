@@ -1,7 +1,12 @@
 parameters:
+    # Document Class
     app.document.category: AppBundle\Document\Category
+
+    # Handler Class
     app.document.handler: AppBundle\Handler\CategoryHandler
 
+    # FormType Class
+    app.form.type.category: AppBundle\Form\Type\CategoryType
 
 services:
 #    service_name:
