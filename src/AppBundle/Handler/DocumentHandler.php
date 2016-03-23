@@ -11,6 +11,7 @@ namespace AppBundle\Handler;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Symfony\Component\Form\FormFactoryInterface;
 use AppBundle\Form\InvalidFormException;
+use Symfony\Component\HttpFoundation\Response;
 
 abstract class DocumentHandler implements HandlerInterface
 {
@@ -48,6 +49,23 @@ abstract class DocumentHandler implements HandlerInterface
         return $this->repository->find($id);
     }
 
+    public function delete($id)
+    {
+        $document = $this->get($id);
+
+        try {
+            $this->dm->remove($document);
+            $this->dm->flush();
+
+            return true;
+
+        } catch (\Exception $e) {
+
+            return $e;
+
+        }
+    }
+
     public function post(array $parameters)
     {
         $document = $this->createDocumentClass();
@@ -55,8 +73,22 @@ abstract class DocumentHandler implements HandlerInterface
         return $this->process($document, $parameters, $method = 'POST');
     }
 
-    public function process( $document, array $parameters, $method = "PUT")
+    public function put($id, array $parameters)
     {
+        $document = $this->get($id);
+
+        return $this->process($document, $parameters, $method = 'PUT');
+    }
+
+    public function patch($document, array $parameters)
+    {
+        return $this->process($document, $parameters, $method = 'PATCH');
+    }
+
+    public function process($document, array $parameters, $method = "PUT")
+    {
+
+
         $form = $this->formFactory->create($this->createDocumentType(), $document, array('method' => $method));
 
         $form->submit($parameters, "PATCH" !== $method);
@@ -64,6 +96,8 @@ abstract class DocumentHandler implements HandlerInterface
         if ($form->isValid()) {
 
             $document = $form->getData();
+
+            dump($document);
 
             $this->dm->persist($document);
             $this->dm->flush($document);

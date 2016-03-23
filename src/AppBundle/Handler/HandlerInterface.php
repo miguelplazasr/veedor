@@ -16,7 +16,11 @@ interface HandlerInterface
 
     public function get($id);
 
+    public function delete($id);
+
     public function post(array $parameters);
+
+    public function put($id, array $parameters);
 
     public function process($document, array $parameters, $method = null);
 

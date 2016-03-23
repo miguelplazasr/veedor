@@ -38,13 +38,20 @@ class CategoryType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Document\Category',
+            //'data_class' => 'AppBundle\Document\Category',
+            'csrf_protection' => false,
+            'allow_extra_fields' => true,
+
         ));
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
-        return 'appbundle_category';
+        return 'category';
     }
+
 
 }

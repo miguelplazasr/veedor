@@ -79,6 +79,16 @@ doctrine_mongodb:
 # app/config/config.yml
 nelmio_api_doc: ~
 
+# Nelmio Cors Configuration
+nelmio_cors:
+    paths:
+        '^/api/':
+            allow_origin: ['*']
+            allow_headers: ['*']
+            allow_methods: ['POST', 'PUT', 'GET', 'DELETE','OPTIONS']
+            max_age: 3600
+
+
 # FOSREst Configuration
 fos_rest:
     param_fetcher_listener: true
