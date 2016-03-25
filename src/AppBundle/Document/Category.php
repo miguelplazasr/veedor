@@ -22,19 +22,25 @@ class Category
      * @var
      * @MongoDB\Id()
      */
-    protected $id;
+    private $id;
 
     /**
      * @var
      * @MongoDB\String()
      */
-    protected $name;
+    private $name;
 
     /**
      * @var
      * @MongoDB\String()
      */
-    protected $description;
+    private $description;
+
+    /**
+     * @var
+     * @MongoDB\ReferenceMany(targetDocument="Issue", mappedBy="category", cascade="all")
+     */
+    private $issues = array();
 
 
 
@@ -91,5 +97,40 @@ class Category
     public function getDescription()
     {
         return $this->description;
+    }
+
+    public function __construct()
+    {
+        $this->issues = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add issue
+     *
+     * @param Issue $issue
+     */
+    public function addIssue(\AppBundle\Document\Issue $issue)
+    {
+        $this->issues[] = $issue;
+    }
+
+    /**
+     * Remove issue
+     *
+     * @param Issue $issue
+     */
+    public function removeIssue(\AppBundle\Document\Issue $issue)
+    {
+        $this->issues->removeElement($issue);
+    }
+
+    /**
+     * Get issues
+     *
+     * @return \Doctrine\Common\Collections\Collection $issues
+     */
+    public function getIssues()
+    {
+        return $this->issues;
     }
 }

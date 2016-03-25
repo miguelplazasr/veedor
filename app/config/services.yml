@@ -1,12 +1,15 @@
 parameters:
     # Document Class
     app.document.category: AppBundle\Document\Category
+    app.document.issue: AppBundle\Document\Issue
 
     # Handler Class
-    app.document.handler: AppBundle\Handler\CategoryHandler
+    app.category.handler: AppBundle\Handler\CategoryHandler
+    app.issue.handler: AppBundle\Handler\IssueHandler
 
     # FormType Class
     app.form.type.category: AppBundle\Form\Type\CategoryType
+    app.form.type.issue: AppBundle\Form\Type\IssueType
 
 services:
 #    service_name:
@@ -20,6 +23,11 @@ services:
             - [ setFormFactory, [ "@form.factory" ] ]
 
     app.handler.category:
-        class: "%app.document.handler%"
+        class: "%app.category.handler%"
         parent: app.document_manager
         arguments: [ "%app.document.category%", "%app.form.type.category%" ]
+
+    app.handler.issue:
+        class: "%app.issue.handler%"
+        parent: app.document_manager
+        arguments: [ "%app.document.issue%", "%app.form.type.issue%" ]

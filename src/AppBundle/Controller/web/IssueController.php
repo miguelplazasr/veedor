@@ -1,54 +1,59 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\web;
 
-use AppBundle\Document\Category;
-use AppBundle\Form\Type\CategoryType;
+use AppBundle\Document\Issue;
+use AppBundle\Form\Type\IssueType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class DefaultController extends Controller
+/**
+ * Issue controller.
+ *
+ * @Route("/issue")
+ */
+class IssueController extends Controller
 {
     /**
-     * @Route("/", name="homepage")
+     * @Route("/", name="issue_index")
      */
     public function indexAction(Request $request)
     {
+        $documents = $this->getHandler()->all();
+
+        return $this->render(':issue:index.html.twig', array(
+            'documents' => $documents
+        ));
+
 
     }
 
-    public function getDocumentHandler()
+    public function getHandler()
     {
-        return $this->get('app.handler.category');
+        return $this->get('app.handler.issue');
     }
 
     /**
-     * @Route("/create", name="category_new")
+     * @Route("/create", name="issue_new")
      *
      * @return Response
      */
     public function createAction(Request $request)
     {
 
-        $newDocument = $this->getDocumentHandler()->post(
+        $newDocument = $this->getHandler()->post(
             $request->request->all()
         );
 
-        return $newDocument;
-        /*
-        return $this->render(
-            ':default:index.html.twig',
-            array(
-                'creado' => 'registro creado.',
-            )
-        );*/
+        return $this->redirect($this->generateUrl('issue_index'));
+
     }
 
     /**
-     * @Route("/{id}/edit", name="category_edit")
+     * @Route("/{id}/edit", name="issue_edit")
      * @Method("GET")
      *
      * @param $id
@@ -56,13 +61,13 @@ class DefaultController extends Controller
      */
     public function editAction($id)
     {
-        $document = $this->getDocumentHandler()->get($id);
+        $document = $this->getHandler()->get($id);
 
         $editForm = $this->createForm(
-            new CategoryType(),
+            new IssueType(),
             $document,
             array(
-                'action' => $this->generateUrl('category_update', array('id' => $document->getId())),
+                'action' => $this->generateUrl('issue_update', array('id' => $document->getId())),
                 'method' => 'PUT',
             )
         );
@@ -77,7 +82,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/{id}", name="category_update")
+     * @Route("/{id}", name="issue_update")
      * @Method("PUT")
      *
      * @param Request $request
@@ -87,7 +92,7 @@ class DefaultController extends Controller
     public function updateAction(Request $request, $id)
     {
 
-        $this->getDocumentHandler()->put($id, $request->request->all());
+        $this->getHandler()->put($id, $request->request->all());
 
         return $this->render(
             ':default:index.html.twig',
@@ -104,12 +109,12 @@ class DefaultController extends Controller
      */
     public function newAction()
     {
-        $document = new Category();
+        $document = new Issue();
         $form = $this->createForm(
-            new CategoryType,
+            new IssueType,
             $document,
             array(
-                'action' => $this->generateUrl('category_new'),
+                'action' => $this->generateUrl('issue_new'),
                 'method' => 'POST',
             )
         );

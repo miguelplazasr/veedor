@@ -1,5 +1,5 @@
 app:
-    resource: "@AppBundle/Controller/"
+    resource: "@AppBundle/Controller/web/"
     type:     annotation
 
 app_category:
@@ -9,6 +9,13 @@ app_category:
     options:
         expose: true
 
+app_issue:
+    type: rest
+    resource: AppBundle\Controller\IssueController
+    prefix:   /api
+    options:
+        expose: true
+
 NelmioApiDocBundle:
     resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
-    prefix:   /api/doc
+    prefix:   /api/v1

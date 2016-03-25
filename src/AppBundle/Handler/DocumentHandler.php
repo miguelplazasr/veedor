@@ -91,7 +91,9 @@ abstract class DocumentHandler implements HandlerInterface
 
         $form = $this->formFactory->create($this->createDocumentType(), $document, array('method' => $method));
 
-        $form->submit($parameters, "PATCH" !== $method);
+        dump($parameters);
+
+        $form->submit($parameters[$this->documentPrefix()], "PATCH" !== $method);
 
         if ($form->isValid()) {
 

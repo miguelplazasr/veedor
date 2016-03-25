@@ -2,13 +2,14 @@
 /**
  * Created by PhpStorm.
  * User: miguelplazas
- * Date: 13/03/16
- * Time: 22:17
+ * Date: 22/03/16
+ * Time: 20:42
  */
 
 namespace AppBundle\Controller;
 
 use AppBundle\Form\Type\CategoryType;
+use AppBundle\Form\Type\IssueType;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations;
 use FOS\RestBundle\Util\Codes;
@@ -17,16 +18,17 @@ use Symfony\Component\HttpFoundation\Request;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class CategoryController extends FOSRestController
+
+class IssueController extends FOSRestController
 {
 
-    public function getCategoryHandler()
+    private function getHandler()
     {
-        return $this->get('app.handler.category');
+        return $this->get('app.handler.issue');
     }
 
     /**
-     * List all Categories
+     * List all Issues
      *
      * @ApiDoc(
      *  resource = true,
@@ -38,18 +40,18 @@ class CategoryController extends FOSRestController
      *
      * @return mixed
      */
-    public function getCategoriesAction()
+    public function getIssuesAction()
     {
 
-        return $this->getCategoryHandler()->all();
+        return $this->getHandler()->all();
     }
 
     /**
-     * Get single Category
+     * Get single Issue
      *
      * @ApiDoc(
      *  resource = true,
-     *  output = "AppBundle\Document\Category",
+     *  output = "AppBundle\Document\Issue",
      *  statusCodes = {
      *      200 = "Returned when successful",
      *      400 = "Returned when the page is not found"
@@ -58,19 +60,19 @@ class CategoryController extends FOSRestController
      * @param $id
      * @return array
      */
-    public function getCategoryAction($id)
+    public function getIssueAction($id)
     {
-        return $this->getCategoryHandler()->get($id);
+        return $this->getHandler()->get($id);
 
     }
 
     /**
-     * Create a Category from the submitted data.
+     * Create a Issue from the submitted data.
      *
      * @ApiDoc(
      *  resource = true,
      *  description = "Creates a new page from the submitted data.",
-     *  input = "AppBundle\Form\Type\CategoryType",
+     *  input = "AppBundle\Form\Type\IssueType",
      *  statusCodes = {
      *      200 = "Returned when successful",
      *      400 = "Returned when the form has errors"
@@ -81,19 +83,19 @@ class CategoryController extends FOSRestController
      *
      * @return FormTypeInterface|View
      */
-    public function postCategoryAction(Request $request)
+    public function postIssueAction(Request $request)
     {
-         $newCategory = $this->getCategoryHandler()->post(
-                $request->request->all()
-            );
+        $newDocument = $this->getHandler()->post(
+            $request->request->all()
+        );
 
-            return $newCategory; //$this->routeRedirectView('post_category', $routeOptions, Codes::HTTP_CREATED);
+        return $newDocument; //$this->routeRedirectView('post_category', $routeOptions, Codes::HTTP_CREATED);
 
 
     }
 
     /**
-     * Presents the form to use to create a new category.
+     * Presents the form to use to create a new issue.
      *
      * @ApiDoc(
      *   resource = true,
@@ -106,15 +108,15 @@ class CategoryController extends FOSRestController
      *
      * @return FormTypeInterface
      */
-    public function newCategoryAction()
+    public function newIssueAction()
     {
 
-        return $this->createForm(new CategoryType());
+        return $this->createForm(new IssueType());
     }
 
     protected function getOr404($id)
     {
-        if (!($document = $this->getCategoryHandler()->get($id))) {
+        if (!($document = $this->getHandler()->get($id))) {
             throw new NotFoundHttpException(sprintf('The resource \'%s\' was not found.', $id));
         }
 
@@ -122,7 +124,7 @@ class CategoryController extends FOSRestController
     }
 
     /**
-     * Put Category.
+     * Put Issue.
      *
      * @ApiDoc(
      *  resource = true,
@@ -135,18 +137,18 @@ class CategoryController extends FOSRestController
      * @param $id
      * @return bool|\Exception
      */
-    public function deleteCategoryAction($id)
+    public function deleteIssueAction($id)
     {
-        return $this->getCategoryHandler()->delete($id);
+        return $this->getHandler()->delete($id);
 
     }
 
     /**
-     * Delete Category.
+     * Delete Issue.
      *
      * @ApiDoc(
      *  resource = true,
-     *  input = "AppBundle\Form\Type\CategoryType",
+     *  input = "AppBundle\Form\Type\IssueType",
      *  statusCodes={
      *      200 = "Returned when successful",
      *      400 = "Returned when errors"
@@ -157,14 +159,14 @@ class CategoryController extends FOSRestController
      * @return bool|\Exception
      * @internal param $id
      */
-    public function putCategoryAction($id, Request $request)
+    public function putIssueAction($id, Request $request)
     {
-        $editCategory = $this->getCategoryHandler()->put(
+        $editDocument = $this->getHandler()->put(
             $id,
             $request->request->all()
         );
 
-        return $editCategory; //$this->routeRedirectView('post_category', $routeOptions, Codes::HTTP_CREATED);
+        return $editDocument; //$this->routeRedirectView('post_category', $routeOptions, Codes::HTTP_CREATED);
 
 
         /*
@@ -184,42 +186,5 @@ class CategoryController extends FOSRestController
         */
 
     }
-
-    /**
-     * Patch Category.
-     *
-     * @ApiDoc(
-     *  resource = true,
-     *  statusCodes={
-     *      200 = "Returned when successful",
-     *      400 = "Returned when errors"
-     * }
-     * )
-     *
-     * @param Request $request
-     * @return bool|\Exception
-     * @internal param $id
-     */
-    public function patchCategoryAction($id, Request $request)
-    {
-
-        try {
-            $newCategory = $this->getCategoryHandler()->patch(
-                $id,
-                $request->request->all()
-            );
-            $routeOptions = array(
-                '_format' => $request->get('_format'),
-            );
-
-            return $this->routeRedirectView('post_category', $routeOptions, Codes::HTTP_CREATED);
-        } catch (\Exception $exception) {
-            return $exception->getCode();
-        }
-
-    }
-
-
-
 
 }

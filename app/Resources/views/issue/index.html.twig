@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    {% for document in documents %}
+        {{ loop.index }}<br>
+        {{ document.id }}<br>
+        {{ document.category.name }}<br>
+        {{ document.image }}<br>
+
+
+    {% endfor %}
+{% endblock %}
+
