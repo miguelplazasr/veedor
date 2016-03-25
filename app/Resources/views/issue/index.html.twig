@@ -6,8 +6,8 @@
         {{ loop.index }}<br>
         {{ document.id }}<br>
         {{ document.category.name }}<br>
-        {{ document.image }}<br>
-
+        {{ document.file.filename }}<br>
+        {{ document.mimeType }}<br>
 
     {% endfor %}
 {% endblock %}

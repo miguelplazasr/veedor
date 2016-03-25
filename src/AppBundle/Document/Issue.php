@@ -36,11 +36,26 @@ class Issue
      */
     private $category;
 
-    /**
-     * @MongoDB\File()
-     *
-     */
-    private $image;
+    /** @MongoDB\File */
+    private $file;
+
+    /** @MongoDB\String */
+    private $filename;
+
+    /** @MongoDB\Field() */
+    private $mimeType;
+
+    /** @MongoDB\Field */
+    private $uploadDate;
+
+    /** @MongoDB\Field() */
+    private $length;
+
+    /** @MongoDB\Field() */
+    private $chunkSize;
+
+    /** @MongoDB\Field() */
+    private $md5;
 
 
     /**
@@ -97,25 +112,103 @@ class Issue
         return $this->category;
     }
 
+
+
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    public function setFile($file)
+    {
+        $this->file = $file;
+    }
+
+    public function getFilename()
+    {
+        return $this->filename;
+    }
+
+    public function setFilename($filename)
+    {
+        $this->filename = $filename;
+    }
+
+    public function getMimeType()
+    {
+        return $this->mimeType;
+    }
+
+    public function setMimeType($mimeType)
+    {
+        $this->mimeType = $mimeType;
+    }
+
+    public function getChunkSize()
+    {
+        return $this->chunkSize;
+    }
+
+    public function getLength()
+    {
+        return $this->length;
+    }
+
+    public function getMd5()
+    {
+        return $this->md5;
+    }
+
+    public function getUploadDate()
+    {
+        return $this->uploadDate;
+    }
+
     /**
-     * Set image
+     * Set uploadDate
      *
-     * @param file $image
+     * @param string $uploadDate
      * @return self
      */
-    public function setImage($image)
+    public function setUploadDate($uploadDate)
     {
-        $this->image = $image;
+        $this->uploadDate = $uploadDate;
         return $this;
     }
 
     /**
-     * Get image
+     * Set length
      *
-     * @return file $image
+     * @param string $length
+     * @return self
      */
-    public function getImage()
+    public function setLength($length)
     {
-        return $this->image;
+        $this->length = $length;
+        return $this;
+    }
+
+    /**
+     * Set chunkSize
+     *
+     * @param string $chunkSize
+     * @return self
+     */
+    public function setChunkSize($chunkSize)
+    {
+        $this->chunkSize = $chunkSize;
+        return $this;
+    }
+
+    /**
+     * Set md5
+     *
+     * @param string $md5
+     * @return self
+     */
+    public function setMd5($md5)
+    {
+        $this->md5 = $md5;
+        return $this;
     }
 }
