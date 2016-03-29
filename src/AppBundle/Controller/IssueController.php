@@ -67,6 +67,25 @@ class IssueController extends FOSRestController
     }
 
     /**
+     * Get Issues by category
+     * @ApiDoc(
+     *  resource=true,
+     * output="AppBundle/Document/Issue",
+     * statusCodes={
+     *  200 = "Returned when successful",
+     *  400 = "Returned when the page is not found"
+     * }
+     * )
+     *
+     * @param $category
+     * @return mixed
+     */
+    public function getIssuesCategoryAction($category)
+    {
+        return $this->getHandler()->getIssuesByCategory($category);
+    }
+
+    /**
      * Create a Issue from the submitted data.
      *
      * @ApiDoc(

@@ -14,7 +14,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
  * Class Category
  * @package AppBundle\Document
  *
- * @MongoDB\Document()
+ * @MongoDB\Document(repositoryClass="AppBundle\Document\Repository\CategoryRepository")
  */
 class Category
 {

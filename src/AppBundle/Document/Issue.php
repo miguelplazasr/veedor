@@ -14,7 +14,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
  * Class Issue
  * @package AppBundle\Document
  *
- * @MongoDB\Document()
+ * @MongoDB\Document(repositoryClass="AppBundle\Document\Repository\IssueRepository")
  */
 class Issue
 {
@@ -39,22 +39,22 @@ class Issue
     /** @MongoDB\File */
     private $file;
 
-    /** @MongoDB\String */
+    /** @MongoDB\String() */
     private $filename;
 
-    /** @MongoDB\Field() */
+    /** @MongoDB\String() */
     private $mimeType;
 
-    /** @MongoDB\Field */
+    /** @MongoDB\Date */
     private $uploadDate;
 
-    /** @MongoDB\Field() */
+    /** @MongoDB\Int() */
     private $length;
 
-    /** @MongoDB\Field() */
+    /** @MongoDB\Int() */
     private $chunkSize;
 
-    /** @MongoDB\Field() */
+    /** @MongoDB\String() */
     private $md5;
 
 
