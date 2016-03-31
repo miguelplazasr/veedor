@@ -21,8 +21,8 @@ monolog:
             handler:      nested
         nested:
             type:  stream
-            #path:  "%kernel.logs_dir%/%kernel.environment%.log" #Se comentó esta linea para hacer despliegue de la aplicación en Heroku
-            path: 'php://stderr' # Esta linea es necesario para manejar los logs en Heroku
+            path:  "%kernel.logs_dir%/%kernel.environment%.log" #Se debe comentar esta linea para hacer despliegue de la aplicación en Heroku
+            #path: 'php://stderr' # Esta linea es necesaria para manejar los logs en Heroku
             level: debug
         console:
             type:  console
