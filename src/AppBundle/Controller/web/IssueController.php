@@ -22,10 +22,13 @@ class IssueController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $documents = $this->getHandler()->all();
+        $dm = $this->get('doctrine_mongodb')->getManager();
+
+        $documents = $dm->getRepository('AppBundle:Issue')->countByCategory();
 
         return $this->render(':issue:index.html.twig', array(
-            'documents' => $documents
+            'documents' => $documents,
+
         ));
 
 
@@ -127,5 +130,49 @@ class IssueController extends Controller
             )
         );
 
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     *
+     * @Route("/{id}/show", name="issue_show")
+     */
+    public function showAction($id)
+    {
+
+        $document = $this->getHandler()->get($id);
+
+
+        $response = new Response();
+        $response->headers->set('Content-Type', $document->getMimeType());
+
+        $response->setContent($document->getFile()->getBytes());
+
+        return $response;
+
+
+        //return $this->render(':issue:show.html.twig', array(
+         //   'document' => $document));
+
+    }
+
+    /**
+     * @Route("/category/{category}")
+     * @param $category
+     * @return Response
+     */
+    public function getByCategoryAction($category)
+    {
+        $dm = $this->get('doctrine_mongodb')->getManager();
+
+        $documents = $dm->getRepository('AppBundle:Issue')->findAllByCategory($category);
+
+        return $this->render(
+            'issue/index.html.twig',
+            array(
+                'documents' => $documents,
+            )
+        );
     }
 }

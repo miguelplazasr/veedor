@@ -2,6 +2,12 @@
 
 {% block body %}
 
-    {{ creado }}
+    <h1>Categorias</h1>
+
+    {% for category in documents %}
+
+        {{ category }}
+
+    {% endfor %}
 {% endblock %}
 

@@ -39,7 +39,7 @@ class IssueType extends AbstractType
             'label' => 'Parent',
             'empty_value' => 'Root'
         ))
-        ->add('image', FileType::class, array())
+        ->add('file', FileType::class, array())
     ;
 }
 

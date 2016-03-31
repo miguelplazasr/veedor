@@ -15,8 +15,20 @@ class DefaultController extends Controller
     /**
      * @Route("/", name="homepage")
      */
-    public function indexAction(Request $request)
+    public function indexAction()
     {
+        $dm = $this->get('doctrine_mongodb')->getManager();
+
+        $documents = $dm->getRepository('AppBundle:Category')->findAllCountIssues();
+
+        dump($documents);
+
+        return $this->render(
+            ':default:index.html.twig',
+            array(
+                'documents' => $documents
+            )
+        );
 
     }
 
