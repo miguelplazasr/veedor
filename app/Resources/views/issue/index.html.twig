@@ -2,8 +2,12 @@
 
 {% block body %}
 
+    {{ dump(documents) }}
+
     {% for document in documents %}
         {{ loop.index }}<br>
+
+        <!--
         {{ document.id }}<br>
         {{ document.category.name }}<br>
         {{ document.file.filename }}<br>
@@ -11,6 +15,7 @@
 
         <img src="{{ document.file.size }}">
         {{ document.mimeType }}<br>
+        -->
 
     {% endfor %}
 {% endblock %}

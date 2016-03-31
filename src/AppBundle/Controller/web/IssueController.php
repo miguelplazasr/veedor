@@ -22,7 +22,9 @@ class IssueController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $documents = $this->getHandler()->all();
+        $dm = $this->get('doctrine_mongodb')->getManager();
+
+        $documents = $dm->getRepository('AppBundle:Issue')->countByCategory();
 
         return $this->render(':issue:index.html.twig', array(
             'documents' => $documents,

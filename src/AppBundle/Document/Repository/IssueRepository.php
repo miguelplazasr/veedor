@@ -12,14 +12,29 @@ use Doctrine\ODM\MongoDB\DocumentRepository;
  */
 class IssueRepository extends DocumentRepository
 {
+    private function dm()
+    {
+        return $this->getDocumentManager();
+    }
+
     public function findAllByCategory($category)
     {
-        $dm = $this->getDocumentManager();
-
-        $issues = $dm->createQueryBuilder('AppBundle:Issue')
+        $issues = $this->dm()->createQueryBuilder('AppBundle:Issue')
             ->field('category.id')->equals($category)
             ->getQuery();
 
         return $issues->execute();
+    }
+
+    public function countByCategory()
+    {
+        $categories = $this->dm()->createQueryBuilder('AppBundle:Issue')
+            ->select('id', 'comment', 'filename')
+            ->group(array('category'), array('count'=>0))
+            ->reduce('function (obj, prev) { prev.count += 1;}')
+            ->getQuery();
+
+        return $categories->execute();
+
     }
 }
